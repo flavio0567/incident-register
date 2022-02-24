@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id        String   @id @default(uuid())
+  name      String
+  is_solved Boolean  @default(false)
+  create_at DateTime @default(now())
+
+  solutions Solutions[]
+  incidents Incidents[]
+  @@map("users")
+}
+
+model Equipments {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  department  String?
+  area        String?
+  create_at   DateTime @default(now())
+
+  incidents   Incidents[]
+  @@map("equipments")
+}
+
+model Solutions {
+  id         String   @id @default(uuid())
+  descripton String
+  solver_id  String
+  solver     Users    @relation(fields: [solver_id], references: [id])
+  create_at  DateTime @default(now())
+
+  incidents  Incidents[]
+  @@map("solutions")
+}
+
+model Incidents {
+  id            String     @id @default(uuid())
+  action        String
+  date_solution DateTime
+  equipment_id  String
+  user_id       String
+  solution_id   String
+  equipment     Equipments @relation(fields: [equipment_id], references: [id])
+  user          Users      @relation(fields: [user_id], references: [id])
+  solution      Solutions  @relation(fields: [solution_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  create_at     DateTime   @default(now())
+
+  @@map("incidents")
+}
