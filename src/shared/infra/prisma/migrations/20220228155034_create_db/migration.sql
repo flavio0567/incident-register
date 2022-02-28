@@ -6,8 +6,11 @@ BEGIN TRAN;
 CREATE TABLE [dbo].[users] (
     [id] NVARCHAR(1000) NOT NULL,
     [name] NVARCHAR(1000) NOT NULL,
-    [is_solved] BIT NOT NULL CONSTRAINT [users_is_solved_df] DEFAULT 0,
-    [create_at] DATETIME2 NOT NULL CONSTRAINT [users_create_at_df] DEFAULT CURRENT_TIMESTAMP,
+    [email] NVARCHAR(1000) NOT NULL,
+    [password_hash] NVARCHAR(1000) NOT NULL,
+    [is_active] BIT NOT NULL CONSTRAINT [users_is_active_df] DEFAULT 0,
+    [created_at] DATETIME2 NOT NULL CONSTRAINT [users_created_at_df] DEFAULT CURRENT_TIMESTAMP,
+    [updated_at] DATETIME2 NOT NULL CONSTRAINT [users_updated_at_df] DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT [users_pkey] PRIMARY KEY ([id])
 );
 
@@ -18,7 +21,8 @@ CREATE TABLE [dbo].[equipments] (
     [description] NVARCHAR(1000),
     [department] NVARCHAR(1000),
     [area] NVARCHAR(1000),
-    [create_at] DATETIME2 NOT NULL CONSTRAINT [equipments_create_at_df] DEFAULT CURRENT_TIMESTAMP,
+    [created_at] DATETIME2 NOT NULL CONSTRAINT [equipments_created_at_df] DEFAULT CURRENT_TIMESTAMP,
+    [updated_at] DATETIME2 NOT NULL CONSTRAINT [equipments_updated_at_df] DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT [equipments_pkey] PRIMARY KEY ([id])
 );
 
@@ -27,7 +31,8 @@ CREATE TABLE [dbo].[solutions] (
     [id] NVARCHAR(1000) NOT NULL,
     [descripton] NVARCHAR(1000) NOT NULL,
     [solver_id] NVARCHAR(1000) NOT NULL,
-    [create_at] DATETIME2 NOT NULL CONSTRAINT [solutions_create_at_df] DEFAULT CURRENT_TIMESTAMP,
+    [created_at] DATETIME2 NOT NULL CONSTRAINT [solutions_created_at_df] DEFAULT CURRENT_TIMESTAMP,
+    [updated_at] DATETIME2 NOT NULL CONSTRAINT [solutions_updated_at_df] DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT [solutions_pkey] PRIMARY KEY ([id])
 );
 
@@ -38,8 +43,9 @@ CREATE TABLE [dbo].[incidents] (
     [date_solution] DATETIME2 NOT NULL,
     [equipment_id] NVARCHAR(1000) NOT NULL,
     [user_id] NVARCHAR(1000) NOT NULL,
-    [solution_id] NVARCHAR(1000) NOT NULL,
-    [create_at] DATETIME2 NOT NULL CONSTRAINT [incidents_create_at_df] DEFAULT CURRENT_TIMESTAMP,
+    [solution_id] NVARCHAR(1000),
+    [created_at] DATETIME2 NOT NULL CONSTRAINT [incidents_created_at_df] DEFAULT CURRENT_TIMESTAMP,
+    [updated_at] DATETIME2 NOT NULL CONSTRAINT [incidents_updated_at_df] DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT [incidents_pkey] PRIMARY KEY ([id])
 );
 

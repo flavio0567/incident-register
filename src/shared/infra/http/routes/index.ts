@@ -1,10 +1,8 @@
 import { Router } from 'express';
-import { CreateUserController } from '../../../../modules/users/infra/http/controllers/CreateUserController';
+import { usersRouter } from '../../../../modules/users/infra/http/routes/users.routes';
 
 const routes = Router();
 
-const createUserController = new CreateUserController();
-
-routes.use('/user', createUserController.handle);
+routes.use('/users', usersRouter);
 
 export { routes };
